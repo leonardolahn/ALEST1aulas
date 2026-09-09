@@ -2,74 +2,69 @@ package br.pucrs.alest1;
 
 public class ListArrayOfInteger {
 
-    // Atributos
-    private static final int INITIAL_SIZE = 10;
+    private static final int INITIAL_SIZE = 10; // tamanho padrão do array quando não é definido
     private Integer[] data;
     private int count;
 
-    /**
-     * Construtor da lista.
-     */
     public ListArrayOfInteger() {
         this(INITIAL_SIZE);
     }
-
-    /**
-     * Construtor da lista.
-     * @param tam tamanho inicial a ser alocado para data[]
-     */
     public ListArrayOfInteger(int tam) {
-        if (tam <= 0) {
-            tam = INITIAL_SIZE;
+        if (tam <= 0) {          // se o tamanho pedido é inválido
+            tam = INITIAL_SIZE;  // usa o tamanho padrão
         }
-        data = new Integer[tam];
-        count = 0;
+        data = new Integer[tam]; // cria o array com o tamanho
+        count = 0; // começa vazio
     }
 
-    /**
-     * Esvazia a lista.
-     */
     public void clear() { // O(1)
-        data = new Integer[INITIAL_SIZE];
-        count = 0;
+        data = new Integer[INITIAL_SIZE]; // cria um array com o tamanho padrão
+        count = 0; // com q quantidade de elementos = 0
     }
 
-    /**
-     * Retorna true se a lista nao contem elementos.
-     * @return true se a lista nao contem elementos
-     */
     public boolean isEmpty() { // O(1)
-        return (count == 0);
+        return (count == 0); // se estiver vazio, true
     }
 
-    /**
-     * Retorna o numero de elementos armazenados na lista.
-     * @return o numero de elementos da lista
-     */
     public int size() { // O(1)
-        return count;
+        return count; // retorna a quantidade de elemento presentes no array
     }
 
     public void add(Integer element) { // O(n)
-        if (count == data.length) {
-            setCapacity(data.length * 2);
+        if (count == data.length) {       // se a quantidade for igual ao tamanho do array
+            setCapacity(data.length * 2); // dobra a capacidade do array definindo a capacidade
         }
-        data[count] = element;
-        count++;
+        data[count] = element;            // adiciona o novo element na primeira posição livre do array
+        count++;                          // aumenta a quantidade após a adição
     }
 
-    /**
-     * Retorna o elemento de uma determinada posicao da lista.
-     * @param index a posicao da lista
-     * @return o elemento da posicao especificada
-     * @throws IndexOutOfBoundsException se (index < 0 || index >= size())
-     */
-    public int get(int index) { // O(1)
-        if ((index < 0) || (index >= count)) {
-            throw new IndexOutOfBoundsException("Index = " + index);
+    public void add(int index, Integer element)
+    {
+
+        if ((index < 0) || (index > count)) {                        // se o índice não tá dentro dos limites da lista (0 a count)
+            throw new IndexOutOfBoundsException("Index = " + index); // posição inválida e avisa o chamador
         }
-        return data[index];
+
+        if (count == data.length) {                                  // se a quantidade for igual ao tamanho do array
+            setCapacity(data.length * 2);                            // dobra a capacidade do array definindo a capacidade
+        }
+
+        for (int i = count; i > index; i--)                          // aponta para a primeira posição livre da lista, vai até a posição desejada
+        {
+            data[i] = data[i - 1];                                   // copia o valor da casa anterior pra atual, empurrando tudo pra direita
+        }
+        data[index] = element;                                       // armazena o elemento na posição desejada
+        count++;                                                     // aumenta a quantidade após a adição
     }
+
+    public int get(int index) { // O(1)
+        if ((index < 0) || (index >= count)) {                       // se a posição não existe
+            throw new IndexOutOfBoundsException("Index = " + index); // posição inválida e avisa o chamador
+        }
+        return data[index];                                          // retorna o que estiver armazenado naquela posição
+    }
+
+    
 
     @Override
     public String toString() { // O(n)
@@ -99,7 +94,4 @@ public class ListArrayOfInteger {
             data = newData;
         }
     }
-
-
-
 }
