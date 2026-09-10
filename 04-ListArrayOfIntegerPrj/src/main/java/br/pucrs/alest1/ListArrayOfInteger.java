@@ -86,6 +86,34 @@ public class ListArrayOfInteger {
         return aux; // retorna o valor antigo que foi removido
     }
 
+    public boolean remove(int element)
+    {
+        int index = indexOf(element);
+        if (index != -1)
+        {
+            
+        }
+    }
+
+    public boolean contains(Integer element) { // O(n)
+        for (int i = 0; i < count; i++) { // percorre apenas as posições ocupadas da lista
+            if (data[i].equals(element)) { // se o que estiver em determinada posição for igual ao elemento
+                return true; // achou o elemento, retorna true
+            }
+        }
+        return false; // senão retorna false
+    }
+
+    public int indexOf(Integer element)
+    {
+        for (int i = 0; i < count; i++) { // percorre apenas as posições ocupadas da lista
+            if (data[i].equals(element)) { // se o que estiver em determinada posição for igual ao elemento
+                return i; // retorna a posição do elemento
+            }
+        }
+        return -1; // senão encontra o elemento, retorna -1
+    }
+
     @Override
     public String toString() { // O(n)
         StringBuilder s = new StringBuilder();
