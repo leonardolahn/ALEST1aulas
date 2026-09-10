@@ -9,9 +9,10 @@ public class ListArrayOfInteger {
     public ListArrayOfInteger() {
         this(INITIAL_SIZE);
     }
+
     public ListArrayOfInteger(int tam) {
-        if (tam <= 0) {          // se o tamanho pedido é inválido
-            tam = INITIAL_SIZE;  // usa o tamanho padrão
+        if (tam <= 0) { // se o tamanho pedido é inválido
+            tam = INITIAL_SIZE; // usa o tamanho padrão
         }
         data = new Integer[tam]; // cria o array com o tamanho
         count = 0; // começa vazio
@@ -19,7 +20,7 @@ public class ListArrayOfInteger {
 
     public void clear() { // O(1)
         data = new Integer[INITIAL_SIZE]; // cria um array com o tamanho padrão
-        count = 0; // com q quantidade de elementos = 0
+        count = 0; // com a quantidade de elementos = 0
     }
 
     public boolean isEmpty() { // O(1)
@@ -31,40 +32,59 @@ public class ListArrayOfInteger {
     }
 
     public void add(Integer element) { // O(n)
-        if (count == data.length) {       // se a quantidade for igual ao tamanho do array
+        if (count == data.length) { // se a quantidade for igual ao tamanho do array
             setCapacity(data.length * 2); // dobra a capacidade do array definindo a capacidade
         }
-        data[count] = element;            // adiciona o novo element na primeira posição livre do array
-        count++;                          // aumenta a quantidade após a adição
+        data[count] = element; // adiciona o novo elemento na primeira posição livre do array
+        count++; // aumenta a quantidade após a adição
     }
 
-    public void add(int index, Integer element)
-    {
+    public void add(int index, Integer element) {
 
-        if ((index < 0) || (index > count)) {                        // se o índice não tá dentro dos limites da lista (0 a count)
+        if ((index < 0) || (index > count)) { // se o índice não tá dentro dos limites da lista (0 a count)
             throw new IndexOutOfBoundsException("Index = " + index); // posição inválida e avisa o chamador
         }
 
-        if (count == data.length) {                                  // se a quantidade for igual ao tamanho do array
-            setCapacity(data.length * 2);                            // dobra a capacidade do array definindo a capacidade
+        if (count == data.length) { // se a quantidade for igual ao tamanho do array
+            setCapacity(data.length * 2); // dobra a capacidade do array definindo a capacidade
         }
 
-        for (int i = count; i > index; i--)                          // aponta para a primeira posição livre da lista, vai até a posição desejada
+        for (int i = count; i > index; i--) // aponta para a primeira posição livre da lista, vai até a posição desejada
         {
-            data[i] = data[i - 1];                                   // copia o valor da casa anterior pra atual, empurrando tudo pra direita
+            data[i] = data[i - 1]; // copia o valor da casa anterior pra atual, empurrando tudo pra direita
         }
-        data[index] = element;                                       // armazena o elemento na posição desejada
-        count++;                                                     // aumenta a quantidade após a adição
+        data[index] = element; // armazena o elemento na posição desejada
+        count++; // aumenta a quantidade após a adição
     }
 
     public int get(int index) { // O(1)
-        if ((index < 0) || (index >= count)) {                       // se a posição não existe
+        if ((index < 0) || (index >= count)) { // se a posição não existe
             throw new IndexOutOfBoundsException("Index = " + index); // posição inválida e avisa o chamador
         }
-        return data[index];                                          // retorna o que estiver armazenado naquela posição
+        return data[index]; // retorna o que estiver armazenado naquela posição
     }
 
-    
+    public int set(int index, int element) {
+        if ((index < 0) || (index >= count)) { // se a posição não existe
+            throw new IndexOutOfBoundsException("Index = " + index); // posição inválida e avisa o chamador
+        }
+
+        int aux = data[index]; // aux guarda o valor antigo antes de sobrescrever
+        data[index] = element; // sobrescreve com o valor novo
+        return aux; // retorna o valor antigo
+    }
+
+    public int removeByIndex(int index) { // O(n)
+        if ((index < 0) || (index >= count)) { // verifica se a posição existe de verdade na lista
+            throw new IndexOutOfBoundsException("Index = " + index); // posição inválida, avisa o chamador
+        }
+        int aux = data[index]; // guarda o valor que será removido, para retornar depois
+        for (int i = index; i < count - 1; i++) { // percorre da posição removida até o penúltimo elemento
+            data[i] = data[i + 1]; // puxa o elemento seguinte para a posição atual, fechando o buraco
+        }
+        count--; // diminui a quantidade, já que um elemento foi removido
+        return aux; // retorna o valor antigo que foi removido
+    }
 
     @Override
     public String toString() { // O(n)

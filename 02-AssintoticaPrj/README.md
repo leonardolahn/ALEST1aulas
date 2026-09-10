@@ -1,4 +1,4 @@
-# 02-NotacaoAssintoticaPrj
+# 02-AssintoticaPrj
 
 Projeto Maven criado automaticamente com Java 25 e JUnit 5.
 
@@ -16,7 +16,7 @@ mvn compile
 ## Como executar
 
 ```bash
-mvn exec:java -Dexec.mainClass="br.pucrs.alest.App"
+mvn exec:java -Dexec.mainClass="br.pucrs.alest1.App"
 ```
 
 ## Como executar os testes

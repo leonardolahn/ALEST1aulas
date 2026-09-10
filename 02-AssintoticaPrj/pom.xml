@@ -5,8 +5,8 @@
 
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>br.pucrs.alest</groupId>
-  <artifactId>02-NotacaoAssintoticaPrj</artifactId>
+  <groupId>br.pucrs.alest1</groupId>
+  <artifactId>02-AssintoticaPrj</artifactId>
   <version>1.0-SNAPSHOT</version>
 
   <properties>

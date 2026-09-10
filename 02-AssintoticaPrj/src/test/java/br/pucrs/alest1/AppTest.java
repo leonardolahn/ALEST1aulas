@@ -1,4 +1,4 @@
-package br.pucrs.alest;
+package br.pucrs.alest1;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
