@@ -88,11 +88,13 @@ public class ListArrayOfInteger {
 
     public boolean remove(int element)
     {
-        int index = indexOf(element);
-        if (index != -1)
+        int index = indexOf(element); // procura a posição do elemento (-1 se não achar) com a reutilização do indexOf
+        if (index != -1) // se o index for diferente de -1 (se encontrou)
         {
-            
+            removeByIndex(index); // reutiliza o removeByIndex, removendo usando o índice encontrado
+            return true; // e retorna true
         }
+        return false; // se não estava na lista, retorna false
     }
 
     public boolean contains(Integer element) { // O(n)
