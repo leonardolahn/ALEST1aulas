@@ -4,20 +4,19 @@ public class LinkedListOfInteger {
 
     // Classe interna Node
     private class Node {
-        public Integer element;
-        public Node next;
+        public Integer element; // guarda o valor armazenado no nodo
+        public Node next; // referência para o próximo nodo da lista (ou null se for o último)
 
         public Node(Integer element) {
-            this.element = element;
-            next = null;
+            this.element = element; // define o valor do nodo
+            next = null; // inicialmente não aponta pra nenhum outro nodo
         }
 
         public Node(Integer element, Node next) {
-            this.element = element;
-            this.next = next;
+            this.element = element; // define o valor do nodo
+            this.next = next; // já conecta com o próximo nodo passado por parâmetro
         }
     }
-
 
     // Referência para o primeiro elemento da lista encadeada.
     private Node head;
@@ -26,23 +25,22 @@ public class LinkedListOfInteger {
     // Contador para a quantidade de elementos que a lista contem.
     private int count;
 
-
     /**
      * Construtor da lista.
      */
     public LinkedListOfInteger() {
-        head = null;
-        tail = null;
-        count = 0;
+        head = null; // lista começa vazia, não há primeiro nodo ainda
+        tail = null; // nem último nodo
+        count = 0; // nenhum elemento armazenado
     }
 
     /**
      * Esvazia a lista
      */
     public void clear() {
-        head = null;
-        tail = null;
-        count = 0;
+        head = null; // remove a referência ao primeiro nodo (o garbage collector cuida do resto)
+        tail = null; // remove a referência ao último nodo
+        count = 0; // zera a contagem de elementos
     }
 
     /**
@@ -51,52 +49,48 @@ public class LinkedListOfInteger {
      * @param element elemento a ser adicionado ao final da lista
      */
     public void add(Integer element) {
-        Node n = new Node(element);
-        if (head == null) {
-            head = n;
+        Node n = new Node(element); // cria o novo nodo que vai guardar o elemento
+        if (head == null) { // se a lista está vazia
+            head = n; // o novo nodo passa a ser também o primeiro da lista
         } else {
-            tail.next = n;
+            tail.next = n; // encadeia o novo nodo depois do último nodo existente
         }
-        tail = n;
-        count++;
+        tail = n; // atualiza a referência de último nodo para o novo nodo inserido
+        count++; // aumenta a quantidade de elementos
     }
 
     @Override
-    public String toString() {
-        StringBuilder s = new StringBuilder();
+    public String toString() { // O(n)
+        StringBuilder s = new StringBuilder(); // monta a string de forma eficiente
 
-        Node aux = head;
+        Node aux = head; // ponteiro auxiliar que começa no primeiro nodo, para não perder a referência de head
 
-        while (aux != null) {
-            s.append(aux.element.toString());
-            s.append("\n");
-            aux = aux.next;
+        while (aux != null) { // percorre a lista enquanto houver nodo
+            s.append(aux.element.toString()); // adiciona o valor do nodo atual na string
+            s.append("\n"); // quebra de linha entre os elementos
+            aux = aux.next; // avança para o próximo nodo da lista
         }
 
-        return s.toString();
+        return s.toString(); // converte o StringBuilder em String de fato
     }
-
-    ///////////////////////////////////////////////////
-    //// EXERCICIOS - VEJA SLIDES E ENUNACIADO
-    ///////////////////////////////////////////////////
 
     public boolean isEmpty()
     {
-        return head == null; // se o primeiro for null, está vazio
+        return (head == null); // se o head estiver vazio
     }
 
     public int size()
     {
-        int size = 0;
-        Node aux = head; // variável auxiliar para n perder a anterior
-        while (aux != null) //enquanto o head n for nulo
-        {
-            size++; // o tamanho aumenta
-            aux = aux.next; // e vai pra próxima
-        }
-        return size;
+        return count; // para saber o tamanho retorna a contagem
     }
 
+    public int get(int index)
+    {
+        if ((index < 0) || (index >= count))
+        {
+            throw new IndexOutOfBoundsException("Index = " + index);
+        }
 
-
+        
+    }
 }
