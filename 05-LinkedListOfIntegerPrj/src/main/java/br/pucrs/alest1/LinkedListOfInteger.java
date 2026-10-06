@@ -86,11 +86,38 @@ public class LinkedListOfInteger {
 
     public int get(int index)
     {
-        if ((index < 0) || (index >= count))
+        if ((index < 0) || (index >= count)) // verifica se a posição existe na lista
         {
-            throw new IndexOutOfBoundsException("Index = " + index);
+            throw new IndexOutOfBoundsException("Index = " + index); // se for inválida, aciona a exceção
         }
+        Node aux = head; // ponteiro auxiliar começa no primeiro nodo
+        for (int i = 0; i < index; i++) // avança index vezes para chegar no nodo desejado
+        {
+            aux = aux.next; // move o ponteiro pro próximo nodo
+        }
+        return aux.element; // retorna o elemento do nodo em que o ponteiro parou
+    }
 
-        
+    public void addFront(int element)
+    {
+        // cria um novo nodo que guarda o valor recebido
+        Node aux = new Node(element);
+
+        // se a lista está vazia
+        if (head == null)
+        {
+            // o novo nodo é o primeiro e o último da lista, por ser o único
+            head = aux;
+            tail = aux;
+        }
+        else // caso contrário
+        {
+            // liga o novo nodo ao antigo primeiro nodo
+            aux.next = head;
+            // o novo nodo passa a ser o primeiro da lista
+            head = aux;
+        }
+        // a lista ganhou um nodo, então o contador aumenta
+        count++;
     }
 }
