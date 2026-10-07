@@ -1,4 +1,4 @@
-
+package br.pucrs.alest1;
 public class DoubleLinkedListOfInteger {
     // Referencia para o sentinela de inicio da lista encadeada.
     private Node header;
