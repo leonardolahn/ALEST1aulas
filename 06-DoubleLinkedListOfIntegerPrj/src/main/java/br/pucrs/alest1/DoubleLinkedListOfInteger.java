@@ -83,18 +83,18 @@ public class DoubleLinkedListOfInteger {
         {
             // q começa do nodo seguinte a p
             Node q = p.next;
-            // compara p
+            // compara p com todos q vem depois
             while (q != trailer)
                 {
                     if (p.element.equals(q.element))
                     {
-                        return false;
+                        return false; // se acha um repetido retorna falso
                     }
-                    q = q.next;
+                    q = q.next; // avança q pro proximo
                 }
-                p = p.next;
+                p = p.next; // avança p pro proximo
             }
-        return true;
+        return true; // nenhum repetido
     }
 
     @Override
