@@ -1,147 +1,143 @@
 package br.pucrs.alest1;
 
-public class ListArrayOfInteger {
-
-    private static final int INITIAL_SIZE = 10; // tamanho padrão do array quando não é definido
+public class ListArrayOfInteger
+{
+    // capacidade padrão quando nenhum tamanho válido é informado
+    private static final int INITIAL_SIZE = 10;
+    // arranjo que guarda os elementos da lista
     private Integer[] data;
+    // quantidade de elementos realmente armazenados (não é o tamanho do arranjo)
     private int count;
 
-    public ListArrayOfInteger() {
+    public ListArrayOfInteger()
+    {
+        // chama o outro construtor usando a capacidade padrão
         this(INITIAL_SIZE);
     }
 
-    public ListArrayOfInteger(int tam) {
-        if (tam <= 0) { // se o tamanho pedido é inválido
-            tam = INITIAL_SIZE; // usa o tamanho padrão
-        }
-        data = new Integer[tam]; // cria o array com o tamanho
-        count = 0; // começa vazio
-    }
-
-    public void clear() { // O(1)
-        data = new Integer[INITIAL_SIZE]; // cria um array com o tamanho padrão
-        count = 0; // com a quantidade de elementos = 0
-    }
-
-    public boolean isEmpty() { // O(1)
-        return (count == 0); // se estiver vazio, true
-    }
-
-    public int size() { // O(1)
-        return count; // retorna a quantidade de elemento presentes no array
-    }
-
-    public void add(Integer element) { // O(n)
-        if (count == data.length) { // se a quantidade for igual ao tamanho do array
-            setCapacity(data.length * 2); // dobra a capacidade do array definindo a capacidade
-        }
-        data[count] = element; // adiciona o novo elemento na primeira posição livre do array
-        count++; // aumenta a quantidade após a adição
-    }
-
-    public void add(int index, Integer element) {
-
-        if ((index < 0) || (index > count)) { // se o índice não tá dentro dos limites da lista (0 a count)
-            throw new IndexOutOfBoundsException("Index = " + index); // posição inválida e avisa o chamador
-        }
-
-        if (count == data.length) { // se a quantidade for igual ao tamanho do array
-            setCapacity(data.length * 2); // dobra a capacidade do array definindo a capacidade
-        }
-
-        for (int i = count; i > index; i--) // aponta para a primeira posição livre da lista, vai até a posição desejada
-        {
-            data[i] = data[i - 1]; // copia o valor da casa anterior pra atual, empurrando tudo pra direita
-        }
-        data[index] = element; // armazena o elemento na posição desejada
-        count++; // aumenta a quantidade após a adição
-    }
-
-    public int get(int index) { // O(1)
-        if ((index < 0) || (index >= count)) { // se a posição não existe
-            throw new IndexOutOfBoundsException("Index = " + index); // posição inválida e avisa o chamador
-        }
-        return data[index]; // retorna o que estiver armazenado naquela posição
-    }
-
-    public int set(int index, int element) {
-        if ((index < 0) || (index >= count)) { // se a posição não existe
-            throw new IndexOutOfBoundsException("Index = " + index); // posição inválida e avisa o chamador
-        }
-
-        int aux = data[index]; // aux guarda o valor antigo antes de sobrescrever
-        data[index] = element; // sobrescreve com o valor novo
-        return aux; // retorna o valor antigo
-    }
-
-    public int removeByIndex(int index) { // O(n)
-        if ((index < 0) || (index >= count)) { // verifica se a posição existe de verdade na lista
-            throw new IndexOutOfBoundsException("Index = " + index); // posição inválida, avisa o chamador
-        }
-        int aux = data[index]; // guarda o valor que será removido, para retornar depois
-        for (int i = index; i < count - 1; i++) { // percorre da posição removida até o penúltimo elemento
-            data[i] = data[i + 1]; // puxa o elemento seguinte para a posição atual, fechando o buraco
-        }
-        count--; // diminui a quantidade, já que um elemento foi removido
-        return aux; // retorna o valor antigo que foi removido
-    }
-
-    public boolean remove(int element)
+    public ListArrayOfInteger(int tam)
     {
-        int index = indexOf(element); // procura a posição do elemento (-1 se não achar) com a reutilização do indexOf
-        if (index != -1) // se o index for diferente de -1 (se encontrou)
+        // tamanho inválido
+        if (tam <= 0)
         {
-            removeByIndex(index); // reutiliza o removeByIndex, removendo usando o índice encontrado
-            return true; // e retorna true
+            // usa a capacidade padrão no lugar
+            tam = INITIAL_SIZE;
         }
-        return false; // se não estava na lista, retorna false
+        // cria o arranjo com a capacidade definida
+        data = new Integer[tam];
+        // lista começa vazia
+        count = 0;
     }
 
-    public boolean contains(Integer element) { // O(n)
-        for (int i = 0; i < count; i++) { // percorre apenas as posições ocupadas da lista
-            if (data[i].equals(element)) { // se o que estiver em determinada posição for igual ao elemento
-                return true; // achou o elemento, retorna true
-            }
-        }
-        return false; // senão retorna false
-    }
-
-    public int indexOf(Integer element)
+    public void clear() // O(1)
     {
-        for (int i = 0; i < count; i++) { // percorre apenas as posições ocupadas da lista
-            if (data[i].equals(element)) { // se o que estiver em determinada posição for igual ao elemento
-                return i; // retorna a posição do elemento
-            }
-        }
-        return -1; // senão encontra o elemento, retorna -1
+        // descarta o arranjo antigo e cria um novo, vazio
+        data = new Integer[INITIAL_SIZE];
+        // zera a contagem de elementos
+        count = 0;
     }
+
+    public boolean isEmpty() // O(1)
+    {
+        // vazia quando não há nenhum elemento armazenado
+        return (count == 0);
+    }
+
+    public int size() // O(1)
+    {
+        // número de elementos armazenados
+        return count;
+    }
+
+    /**
+     * Retorna o elemento de uma determinada posicao da lista.
+     * @param index a posicao da lista
+     * @return o elemento da posicao especificada
+     * @throws IndexOutOfBoundsException se (index < 0 || index >= size())
+     */
 
     @Override
-    public String toString() { // O(n)
+    public String toString() // O(n)
+    {
+        // evita criar várias Strings ao concatenar
         StringBuilder s = new StringBuilder();
-        for (int i = 0; i < count; i++) {
+        // percorre só até count, não até data.length
+        for (int i = 0; i < count; i++)
+        {
+            // adiciona o elemento atual
             s.append(data[i]);
-            if (i != (count - 1)) {
+            // se não for o último elemento
+            if (i != (count - 1))
+            {
+                // coloca o separador
                 s.append(",");
             }
         }
+        // quebra de linha no final
         s.append("\n");
+        // converte o StringBuilder em String
         return s.toString();
     }
 
-    private void setCapacity(int newCapacity) {
-        if (newCapacity != data.length) {
+    private void setCapacity(int newCapacity) // O(n), pois copia os elementos
+    {
+        // só faz algo se a capacidade realmente mudar
+        if (newCapacity != data.length)
+        {
+            // quantos elementos serão copiados
             int min = 0;
+            // novo arranjo com a nova capacidade
             Integer[] newData = new Integer[newCapacity];
-            if (data.length < newCapacity) {
+            // se o novo arranjo é maior
+            if (data.length < newCapacity)
+            {
+                // copia todo o arranjo antigo
                 min = data.length;
-            } else {
+            }
+            // se o novo arranjo é menor
+            else
+            {
+                // copia só o que cabe
                 min = newCapacity;
             }
-            for (int i = 0; i < min; i++) {
+            // copia posição por posição
+            for (int i = 0; i < min; i++)
+            {
                 newData[i] = data[i];
             }
+            // passa a usar o novo arranjo
             data = newData;
         }
+    }
+
+    public int get(int index) // O(1)
+    {
+        // se o índice for menor que zero ou maior ou igual ao count (índice fora do intervalo dos elementos válidos)
+        if ((index < 0) || (index >= count))
+        {
+            // sinaliza o erro
+            throw new IndexOutOfBoundsException("Index = " + index);
+        }
+        // acesso direto pela posição
+        return data[index];
+    }
+
+    public void add(Integer element) // O(1) amortizado, O(n) quando precisa redimensionar
+    {
+        // arranjo cheio
+        if (count == data.length)
+        {
+            // estratégia "dobro": dobra a capacidade
+            setCapacity(data.length * 2);
+        }
+        // coloca o novo elemento na primeira posição livre
+        data[count] = element;
+        // atualiza a contagem após inserir
+        count++;
+    }
+
+    public void add(int index, Integer element)
+    {
+
     }
 }
