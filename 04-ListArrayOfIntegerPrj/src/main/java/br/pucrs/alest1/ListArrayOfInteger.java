@@ -136,8 +136,67 @@ public class ListArrayOfInteger
         count++;
     }
 
-    public void add(int index, Integer element)
+    public void add(int index, Integer element) // O(n)
     {
+        // se o índice for menor que zero ou maior ou igual ao count (a posição mais distante permitida é a primeira livre)
+        if (index < 0 || index > count)
+        {
+            throw new IndexOutOfBoundsException("Index = " + index);
+        }
+        // arranjo cheio
+        if (count == data.length)
+        {
+            // estratégia "dobro": dobra a capacidade
+            setCapacity(data.length * 2);
+        }
 
+        // percorre o array de trás pra frente, do último elemento até index
+        for (int i = count - 1; i >= index; i--)
+        {
+            // move os elementos para a direita para abrir espaço
+            data[i+1] = data[i];
+        }
+        // coloca o elemento na posição que foi aberta
+        data[index] = element;
+        // aumenta a quantidade de elementos na lista
+        count++;
+    }
+
+    public int set (int index , int element)
+    {
+        // se o índice for menor que zero ou maior ou igual ao count (índice fora do intervalo dos elementos válidos)
+        if ((index < 0) || (index >= count))
+        {
+            // sinaliza o erro
+            throw new IndexOutOfBoundsException("Index = " + index);
+        }
+        // guarda o valor que vai ser substituído antes de sobrescrever
+        int aux = data[index];
+        // sobrescreve com o novo valor
+        data[index] = element;
+        // retorna o valor que foi substituído
+        return aux;
+    }
+
+    public Integer removeByIndex(int index)
+    {
+        // Se o índice estiver fora do intervalo válido, sinaliza o erro
+        if (index < 0 || index >= count)
+        {
+            throw new IndexOutOfBoundsException("Index = " + index);
+        }
+        // Guarda o valor que será removido (usando Integer para consistência)
+        Integer aux = data[index];
+        // Percorre da posição removida até o penúltimo elemento
+        for (int i = index; i < count - 1; i++)
+        {
+            // Puxa o elemento seguinte para a posição atual, fechando o buraco
+            data[i] = data[i + 1];
+        }
+        // Diminui a quantidade de elementos válidos
+        count--;
+        // Retorna o elemento que foi removido
+        return aux;
     }
 }
+
