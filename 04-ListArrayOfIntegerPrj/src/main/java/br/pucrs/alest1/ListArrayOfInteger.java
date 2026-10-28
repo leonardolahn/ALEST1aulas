@@ -198,5 +198,52 @@ public class ListArrayOfInteger
         // Retorna o elemento que foi removido
         return aux;
     }
+
+    public boolean contains (int element)
+    {
+        // percorre o array do primeiro ao último elemento existente na lista
+        for (int i = 0; i < count; i++)
+        {
+            // se o elemento da posição for igual ao elemento comparado
+            if (data[i].equals(element))
+            {
+                // retorna true
+                return true;
+            }
+        }
+        // caso contrário, retorna falso
+        return false;
+    }
+
+    public int indexOf (int element)
+    {
+        // percorre o array do primeiro ao último elemento existente na lista
+        for (int i = 0; i < count; i++)
+        {
+            // se o elemento da posição for igual ao elemento comparado
+            if (data[i].equals(element))
+            {
+                // retorna a posição
+                return i;
+            }
+        }
+        // caso contrário, retorna -1
+        return -1;
+    }
+
+    public boolean remove(int element)
+    {
+        // chama o método que devolve a posição e o resultado é guardado numa variável
+        int posicao = indexOf(element);
+        // se a posição for válida
+        if (posicao > -1)
+        {
+             // chama o método que remove por posição e retornar true
+            removeByIndex(posicao);
+            return true;
+        }
+        // se não, retornar false
+        return false;
+    }
 }
 
